@@ -9,9 +9,14 @@ interface NotesHttpResponse {
     totalPages: number
 }
 
-if (!myKey) {
-  throw new Error("NEXT_PUBLIC_NOTEHUB_TOKEN is not defined in the environment variables.");
+function ensureKey() {
+  const myKey = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+  if (!myKey) {
+    throw new Error("Auth token is missing. Please set NEXT_PUBLIC_NOTEHUB_TOKEN.");
+  }
+  return myKey;
 }
+
 const url = `https://notehub-public.goit.study/api/notes`;
 
 export async function fetchNotes(page: number, perPage: number, searchTerm: string):
@@ -23,7 +28,7 @@ export async function fetchNotes(page: number, perPage: number, searchTerm: stri
             search: searchTerm,
     }, 
     headers: {
-        Authorization: `Bearer ${myKey}`,
+        Authorization: `Bearer ${ensureKey()}`,
         Accept: 'application/json'
         }
     }) 
@@ -34,7 +39,7 @@ export async function fetchNotes(page: number, perPage: number, searchTerm: stri
 export async function deleteNote(id: string) {
     const res = await axios.delete<Note>(`${url}/${id}`, {
     headers: {
-        Authorization: `Bearer ${myKey}`,
+        Authorization: `Bearer ${ensureKey()}`,
         Accept: 'application/json'
         }
     })
@@ -45,7 +50,7 @@ export async function deleteNote(id: string) {
 export async function createNote(newNote: NewNote) {
     const res = await axios.post<Note>(`${url}`, newNote, {
     headers: {
-        Authorization: `Bearer ${myKey}`,
+        Authorization: `Bearer ${ensureKey()}`,
         Accept: 'application/json'
         }
     })
@@ -56,7 +61,7 @@ export async function createNote(newNote: NewNote) {
 export async function fetchNotesById(id: string){
     const res = await axios.get<Note>(`${url}/${id}`, {
     headers: {
-        Authorization: `Bearer ${myKey}`,
+        Authorization: `Bearer ${ensureKey()}`,
         Accept: 'application/json'
         }
     })
