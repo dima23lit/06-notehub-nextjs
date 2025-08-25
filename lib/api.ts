@@ -54,13 +54,12 @@ export async function createNote(newNote: NewNote) {
     return res.data
 }
 
-export async function fetchNotesById(id: string){
+export async function fetchNoteById(id: string){
     const res = await axios.get<Note>(`${url}/${id}`, {
     headers: {
         Authorization: `Bearer ${ensureKey()}`,
         Accept: 'application/json'
         }
     })
-    console.log(url, id)
     return res.data
 }

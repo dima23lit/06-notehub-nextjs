@@ -1,4 +1,4 @@
-import { fetchNotesById } from "@/lib/api"
+import { fetchNoteById } from "@/lib/api"
 import NoteDetails from "./NoteDetails.client"
 
 import {
@@ -17,8 +17,8 @@ export default async function NotesDetailsPage({ params }: Props) {
     const queryClient = new QueryClient();
 
     await queryClient.prefetchQuery({
-        queryKey: ['Note', { id: id }],
-          queryFn: () => fetchNotesById(id),
+        queryKey: ['note', { id: id }],
+          queryFn: () => fetchNoteById(id),
       });
 
     return (

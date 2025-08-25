@@ -1,9 +1,9 @@
 import Home from "@/components/Home/Home";
 
-export default function GlobalPage() {
+export default function Page() {
   return (
-    <div>
+    <main>
       <Home/>
-    </div>
+    </main>
   );
 }
